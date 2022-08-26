@@ -23,6 +23,7 @@
 hs_err_pid*
 
 *.properties
+application.properties
 
 HELP.md
 target/
