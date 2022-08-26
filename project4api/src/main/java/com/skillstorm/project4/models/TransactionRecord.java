@@ -6,7 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TRANSACTION")
+@Table(name="TRANSACTION_RECORD")
 public class TransactionRecord {
 
 	private UUID id;

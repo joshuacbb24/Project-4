@@ -1,5 +1,6 @@
 package com.skillstorm.project4.models;
 
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -31,6 +32,7 @@ public class Account {
 	private String bgColor;
 	private String avatar;
 	private Boolean admin;
+	private Set<Account> account;
 	
 	
 }
