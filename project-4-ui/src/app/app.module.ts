@@ -43,12 +43,28 @@ import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { HomeComponent } from './home/home.component'
+import { HomeComponent } from './home/home.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { FooterComponent } from './footer/footer.component';
+import { GoalsComponent } from './goals/goals.component';
+import { LoginComponent } from './login/login.component';
+import { AccountPageComponent } from './account-page/account-page.component';
+import { EditGoalsComponent } from './edit-goals/edit-goals.component';
+import { GoalListingComponent } from './goal-listing/goal-listing.component'
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent,
+    SidebarComponent,
+    FooterComponent,
+    GoalsComponent,
+    LoginComponent,
+    AccountPageComponent,
+    EditGoalsComponent,
+    GoalListingComponent
   ],
   imports: [
     BrowserModule,
