@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.UUID;
 
 public class Transaction {
-	
-	private UUID id;
+
+	private int id;
 	private long ammount;
 	private Set<Map<Account, Long>> fromAccount;
 	private Account toAccount;

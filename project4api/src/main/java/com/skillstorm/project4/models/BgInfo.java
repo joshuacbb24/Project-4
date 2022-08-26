@@ -6,15 +6,15 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="BGINFO")
+@Table(name = "BGINFO")
 public class BgInfo {
 
-	private UUID id;
+	private int id;
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
 	private String birthday;
 	private String gender;
 	private Account account;
-	
+
 }

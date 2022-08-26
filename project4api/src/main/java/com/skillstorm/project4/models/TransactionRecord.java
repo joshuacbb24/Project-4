@@ -6,10 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="TRANSACTION_RECORD")
+@Table(name = "TRANSACTION_RECORD")
 public class TransactionRecord {
 
-	private UUID id;
+	private int id;
 	private long amount;
 	private Account account;
 	private Account submittedAccount;
