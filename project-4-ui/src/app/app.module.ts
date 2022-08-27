@@ -51,7 +51,8 @@ import { GoalsComponent } from './goals/goals.component';
 import { LoginComponent } from './login/login.component';
 import { AccountPageComponent } from './account-page/account-page.component';
 import { EditGoalsComponent } from './edit-goals/edit-goals.component';
-import { GoalListingComponent } from './goal-listing/goal-listing.component'
+import { GoalListingComponent } from './goal-listing/goal-listing.component';
+import { TagifyModule } from 'ngx-tagify';
 
 @NgModule({
   declarations: [
@@ -108,7 +109,8 @@ import { GoalListingComponent } from './goal-listing/goal-listing.component'
     MatTooltipModule,
     MatTreeModule,
     ReactiveFormsModule,
-    DatePipe
+    DatePipe,
+    TagifyModule.forRoot(),
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
