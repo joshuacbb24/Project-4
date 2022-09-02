@@ -1,12 +1,17 @@
 package com.skillstorm.project4.models;
 
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -16,7 +21,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "GOAL")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Goal {
+public class Goal implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,19 +33,21 @@ public class Goal {
 	private String startDate;
 	@Column(name = "END_DATE", nullable = false, length = 10)
 	private String endDate;
-	@ManyToMany
-	private Account account;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "ACCOUNT_GOAL", joinColumns = { @JoinColumn(name = "ACCOUNT_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "GOAL_ID") })
+	private Set<Account> account;
 	@Column(name = "TARGET_GOAL", nullable = false)
-	private long targetGoal;
+	private float targetGoal;
 	@Column(name = "CURRENT_AMOUNT", nullable = false)
-	private long currentAmount;
-	@OneToMany(mappedBy = "goal")
+	private float currentAmount;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "goal")
 	private Set<Transaction> transaction;
 
 	public Goal() {
 	}
 
-	public Goal(String name, String startDate, String endDate, Account account, long targetGoal, long currentAmount) {
+	public Goal(String name, String startDate, String endDate, Set<Account> account, float targetGoal, float currentAmount) {
 		this.name = name;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -49,7 +56,7 @@ public class Goal {
 		this.currentAmount = currentAmount;
 	}
 
-	public Goal(int id, String name, String startDate, String endDate, Account account, long targetGoal,
+	public Goal(int id, String name, String startDate, String endDate, Set<Account> account, float targetGoal,
 			long currentAmount, Set<Transaction> transaction) {
 		this.id = id;
 		this.name = name;
@@ -93,27 +100,27 @@ public class Goal {
 		this.endDate = endDate;
 	}
 
-	public Account getAccount() {
+	public Set<Account> getAccount() {
 		return account;
 	}
 
-	public void setAccount(Account account) {
+	public void setAccount(Set<Account> account) {
 		this.account = account;
 	}
 
-	public long getTargetGoal() {
+	public float getTargetGoal() {
 		return targetGoal;
 	}
 
-	public void setTargetGoal(long targetGoal) {
+	public void setTargetGoal(float targetGoal) {
 		this.targetGoal = targetGoal;
 	}
 
-	public long getCurrentAmount() {
+	public float getCurrentAmount() {
 		return currentAmount;
 	}
 
-	public void setCurrentAmount(long currentAmount) {
+	public void setCurrentAmount(float currentAmount) {
 		this.currentAmount = currentAmount;
 	}
 

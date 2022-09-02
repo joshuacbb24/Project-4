@@ -1,7 +1,10 @@
 package com.skillstorm.project4.models;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "BGINFO")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class BgInfo {
+public class BgInfo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +34,9 @@ public class BgInfo {
 	// dropdown of options
 	@Column(name = "GENDER", nullable = false)
 	private String gender;
-	@ManyToOne
+	// @Column(name = "ACCOUNT_ID", nullable = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ACCOUNT_ID")
-	@Column(name = "ACCOUNT_ID", nullable = false)
 	private Account account;
 
 	public BgInfo() {
