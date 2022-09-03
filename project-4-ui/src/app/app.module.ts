@@ -52,7 +52,15 @@ import { LoginComponent } from './login/login.component';
 import { AccountPageComponent } from './account-page/account-page.component';
 import { EditGoalsComponent } from './edit-goals/edit-goals.component';
 import { GoalListingComponent } from './goal-listing/goal-listing.component';
-import { TagifyModule } from 'ngx-tagify';
+//import { TagifyModule } from 'ngx-tagify';
+import { SignupComponent } from './signup/signup.component';
+import { BackgroundInfoComponent } from './background-info/background-info.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { RestapiService } from './restapi.service';
+import { HttpInterceptorServiceService } from './http-interceptor-service.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpXsrfTokenExtractor } from '@angular/common/http';
+import { ActivatedRouteComponent } from './activated-route/activated-route.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +73,11 @@ import { TagifyModule } from 'ngx-tagify';
     LoginComponent,
     AccountPageComponent,
     EditGoalsComponent,
-    GoalListingComponent
+    GoalListingComponent,
+    SignupComponent,
+    BackgroundInfoComponent,
+    LandingPageComponent,
+    ActivatedRouteComponent
   ],
   imports: [
     BrowserModule,
@@ -110,9 +122,13 @@ import { TagifyModule } from 'ngx-tagify';
     MatTreeModule,
     ReactiveFormsModule,
     DatePipe,
-    TagifyModule.forRoot(),
+    //TagifyModule.forRoot(),
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, RestapiService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpInterceptorServiceService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

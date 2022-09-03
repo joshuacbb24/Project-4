@@ -13,7 +13,7 @@ import com.skillstorm.project4.services.GoalService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value = { "/goals/v1" })
+@RequestMapping(value = { "/goals/v1", "/home/v1", "/v1" })
 public class GoalController {
     @Autowired
     public GoalService goalService;

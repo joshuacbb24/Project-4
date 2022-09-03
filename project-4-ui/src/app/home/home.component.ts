@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RestapiService } from '../restapi.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +9,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  isLoggedIn = false;
+
+  constructor(private restApiService:RestapiService, private router:Router, private actRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.restApiService.isUserLoggedIn();
+    console.log('home ->' + this.isLoggedIn);
+    if (!this.isLoggedIn)
+    {
+      this.router.navigate(["/login"])
+    }
+    const id = this.actRoute.snapshot.paramMap.get('id');
   }
 
+  logout(){
+    this.restApiService.logout().subscribe({
+      next: () => {
+        this.router.navigate(["/login"]);
+      },
+      error: () => {
+
+      }
+
+    });
+  }
 }

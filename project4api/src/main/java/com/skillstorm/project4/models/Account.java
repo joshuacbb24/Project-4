@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -27,12 +28,16 @@ public class Account implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ACCOUNT_ID")
 	private int id;
+	@Column(name = "FIRST_NAME", nullable = false, length = 50)
+	private String firstName;
+	@Column(name = "LAST_NAME", nullable = false, length = 50)
+	private String lastName;
 	@Column(name = "PASSWORD", nullable = false, length = 64)
 	private String password;
 	@Column(name = "EMAIL", nullable = false, unique = true, length = 100)
 	private String email;
-	@Column(name = "CREATED", nullable = false, length = 10)
-	private String created;
+	//@Column(name = "CREATED", nullable = false, length = 10)
+	//private String created;
 	@Column(name = "BGCOLOR", nullable = false, length = 10)
 	private String bgColor;
 	@Column(name = "AVATAR", nullable = true, length = 50)
@@ -41,45 +46,51 @@ public class Account implements Serializable {
 	//@Column(name = "COLLABORATORS", nullable = true)
 	//private Set<Account> account;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	@JsonIgnore
 	private Set<BgInfo> bgInfo;
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	@JsonIgnore
 	private Set<Goal> goal;
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	@JsonIgnore
 	private Set<Notification> notification;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+	@JsonIgnore
 	private Set<Transaction> transaction;
 
 	public Account() {
-		this.bgColor = "1";
-	}
-
-	public Account(String password, String email, String created, String avatar) {
-		this.password = password;
-		this.email = email;
-		this.created = created;
-		this.avatar = avatar;
 		this.bgColor = "";
 	}
 
-	public Account(String password, String email, String created, String avatar, Set<Account> account) {
+	public Account(String firstName, String lastName, String password, String email) {
+		super();
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
-		this.created = created;
-		this.bgColor = "bgColor";
-		this.avatar = avatar;
-		//this.account = account;
+		this.bgColor = "";
 	}
 
-	public Account(int id, String password, String email, String created, String bgColor, String avatar,
-			Set<Account> account) {
+
+
+	public Account(int id, String firstName, String lastName, String password, String email,
+			String bgColor, String avatar, Set<BgInfo> bgInfo, Set<Goal> goal, Set<Notification> notification,
+			Set<Transaction> transaction) {
+		super();
 		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
-		this.created = created;
-		this.bgColor = bgColor;
+		this.bgColor = "";
 		this.avatar = avatar;
-		//this.account = account;
+		this.bgInfo = bgInfo;
+		this.goal = goal;
+		this.notification = notification;
+		this.transaction = transaction;
 	}
+
+
 
 	public int getId() {
 		return id;
@@ -87,6 +98,22 @@ public class Account implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getPassword() {
@@ -103,14 +130,6 @@ public class Account implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getCreated() {
-		return created;
-	}
-
-	public void setCreated(String created) {
-		this.created = created;
 	}
 
 	public String getBgColor() {
@@ -167,10 +186,16 @@ public class Account implements Serializable {
 		return true;
 	}
 
+
+
 	@Override
 	public String toString() {
-		return "Account [avatar=" + avatar + ", bgColor=" + bgColor + ", created=" + created
-				+ ", email=" + email + ", id=" + id + ", password=" + password + "]";
+		return "Account [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", password=" + password
+				+ ", email=" + email + ", bgColor=" + bgColor + ", avatar=" + avatar
+				+ ", bgInfo=" + bgInfo + ", goal=" + goal + ", notification=" + notification + ", transaction="
+				+ transaction + "]";
 	}
+
+
 
 }

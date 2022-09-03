@@ -9,7 +9,7 @@ import com.skillstorm.project4.services.BgInfoService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(value = { "" })
+@RequestMapping(value = { "/user" })
 public class BgInfoController {
     @Autowired
     public BgInfoService bgInfoService;
