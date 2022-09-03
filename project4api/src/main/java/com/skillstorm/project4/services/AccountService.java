@@ -1,6 +1,7 @@
 package com.skillstorm.project4.services;
 
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -29,6 +30,14 @@ public class AccountService {
     	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
     	String encodedPassword = encoder.encode(account.getPassword());
     	account.setPassword(encodedPassword);
+    	
+    	// create object of Random class
+    	Random obj = new Random();
+    	int rand_num = obj.nextInt(0xffffff + 1);
+    	
+    	// format it as hexadecimal string and print
+    	String colorCode = String.format("#%06x", rand_num);
+    	account.setBgColor(colorCode);
     	return accountRepository.save(account);
     	
     }

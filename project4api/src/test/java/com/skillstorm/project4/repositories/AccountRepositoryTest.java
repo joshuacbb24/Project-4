@@ -2,6 +2,8 @@ package com.skillstorm.project4.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Random;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -28,20 +30,28 @@ public class AccountRepositoryTest {
     @Test
     public void testCreateAccount() {
     	Account account = new Account();
-    	account.setEmail("ss@gmail.com");
+    	account.setEmail("pat@gmail.com");
     	account.setPassword("password");
-    	account.setFirstName("Spongebob");
-    	account.setLastName("Squarepants");
-    	account.setBgColor("#0000FF");
+    	account.setFirstName("Patrick");
+    	account.setLastName("Star");
+    	
     	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     	String encodedPassword = encoder.encode(account.getPassword());
-    	System.out.println(encodedPassword);
     	account.setPassword(encodedPassword);
-    	//Account savedAccount = accountRepository.save(account);
     	
-    	//Account existAccount = entityManager.find(Account.class, savedAccount.getId());
+    	// create object of Random class
+    	Random obj = new Random();
+    	int rand_num = obj.nextInt(0xffffff + 1);
     	
-    	//assertThat(existAccount.getEmail()).isEqualTo(account.getEmail());
+    	// format it as hexadecimal string and print
+    	String colorCode = String.format("#%06x", rand_num);
+    	account.setBgColor(colorCode);
+    	
+    	Account savedAccount = accountRepository.save(account);
+    	
+    	Account existAccount = entityManager.find(Account.class, savedAccount.getId());
+    	
+    	assertThat(existAccount.getEmail()).isEqualTo(account.getEmail());
     }
     
     @Test

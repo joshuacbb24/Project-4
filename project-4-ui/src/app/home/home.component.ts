@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
   logout(){
     this.restApiService.logout().subscribe({
       next: () => {
-        this.router.navigate(["/login"]);
+        //this.router.navigate(["/login"]);
       },
       error: () => {
 

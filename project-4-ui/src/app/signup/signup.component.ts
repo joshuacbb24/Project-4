@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute} from '@angular/router';
+import { RestapiService } from '../restapi.service';
 
 @Component({
   selector: 'app-signup',

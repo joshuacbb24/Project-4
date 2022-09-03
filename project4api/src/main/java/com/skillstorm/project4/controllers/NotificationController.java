@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skillstorm.project4.services.NotificationService;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = { "/notify/v1" })
 public class NotificationController {
     @Autowired
