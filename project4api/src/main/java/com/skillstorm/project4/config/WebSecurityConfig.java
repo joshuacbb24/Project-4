@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -59,11 +60,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// this will generate me the CSRF cookie
 		// To access any endpoint, I now need a X-XSRF-TOKEN header containing the value
 		// of the cookie
-		http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+		/*http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+		.ignoringAntMatchers("/login/**");
+		*/
 		// http.authorizeRequests().mvcMatchers("/signup",
 		// "/login").anonymous().anyRequest().authenticated();
-		http.authorizeRequests().mvcMatchers("/login/**", "/logout/**").permitAll()
-		.and().authorizeRequests().anyRequest().authenticated();
+		http.authorizeRequests().mvcMatchers(HttpMethod.OPTIONS, "/login/**").permitAll().mvcMatchers(HttpMethod.OPTIONS, "/home/**").permitAll().anyRequest().authenticated().and().csrf().disable();
 
 		http.logout().permitAll();
 		http.logout().deleteCookies("JSESSIONID").invalidateHttpSession(true).logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)));

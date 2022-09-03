@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.skillstorm.project4.services.BgInfoService;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = { "/user" })
 public class BgInfoController {
     @Autowired

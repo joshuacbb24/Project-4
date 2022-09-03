@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +20,7 @@ export class RestapiService {
   USER_NAME_SESSION_ATTRIBUTE_NAME = ""
   token=""
 
-  constructor(private http:HttpClient) { }
+  constructor(private cookieService:CookieService, private http:HttpClient) { }
 
 
 
@@ -40,6 +43,8 @@ export class RestapiService {
   registerSuccessfulLogin(username: string, password:string, resp:any) {
     // save the username(email) to session
     sessionStorage.setItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME, username)
+    this.cookieService.set('username', username)
+    this.cookieService.set('password', password)
     console.log("response", resp)
   }
 
@@ -48,6 +53,8 @@ export class RestapiService {
     sessionStorage.removeItem(this.USER_NAME_SESSION_ATTRIBUTE_NAME);
     this.username = "";
     this.password = "";
+    this.cookieService.delete('username')
+    this.cookieService.delete('password')
     return this.http.post(environment.apiUrl + 'logout', null)
   }
 

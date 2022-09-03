@@ -18,7 +18,7 @@ import com.skillstorm.project4.models.Account;
 import com.skillstorm.project4.services.AccountService;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = { "/signup","/account"})
 public class AccountController {
     @Autowired

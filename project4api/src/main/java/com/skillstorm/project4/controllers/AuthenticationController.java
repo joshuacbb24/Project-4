@@ -14,12 +14,13 @@ import com.skillstorm.project4.models.Account;
 import com.skillstorm.project4.models.CustomUserDetails;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/auth/v1")
 public class AuthenticationController {
 
     @GetMapping("/login")
     public Account login(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    	
     	return customUserDetails.getAccount();
     }
 }

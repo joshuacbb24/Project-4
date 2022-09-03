@@ -18,9 +18,10 @@ export class HttpInterceptorServiceService {
         let authReq = req.clone({
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + window.btoa(this.restApiService.username + ":" + this.restApiService.password),
-            }
-            )/*,withCredentials: true*/});
+                'Authorization': 'Basic ' + window.btoa(this.cookieService.get('username')+ ":" + this.cookieService.get('password') ),
+                'X-XSRF-TOKEN': this.xsrfTokenExtractor.getToken() as string,
+            })/*,withCredentials: true*/
+        });
         return next.handle(authReq);
     } else {
         return next.handle(req);
