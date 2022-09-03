@@ -22,14 +22,18 @@ export class LoginComponent implements OnInit {
   }
 
   handleLogin() {
-    this.authService.login(this.username, this.password).subscribe((result) => {
+    this.authService.login(this.username, this.password).subscribe({
+      next: (result) =>{
       this.invalidLogin = false;
       this.loginSuccess = true;
       this.successMessage = 'Login Successful';
       this.router.navigate(["/home"])
-    }, () => {
+      },
+      error: (err) => {
+        console.log("error", err)
       this.invalidLogin = true;
       this.loginSuccess = false;
+    }
     });
   }
   

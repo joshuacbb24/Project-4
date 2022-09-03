@@ -15,6 +15,7 @@ export class RestapiService {
   bgColor="";
   avatar=""
   USER_NAME_SESSION_ATTRIBUTE_NAME = ""
+  token=""
 
   constructor(private http:HttpClient) { }
 
@@ -22,8 +23,9 @@ export class RestapiService {
 
   login(username: string, password:string) :Observable<any>{
     //const headers = new HttpHeaders({Authorization: this.createBasicAuthToken(username, password)});
+    console.log("username", username, "password", password);
     return this.http.get(environment.apiUrl + 'auth/v1/login', 
-    {headers: {authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
+    {headers: {Authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
     this.username = username;
     this.password = password;
     this.registerSuccessfulLogin(username, password, res);
@@ -66,4 +68,11 @@ export class RestapiService {
     }
     return user
   }
+  
+  testLoginStatus() :Observable<any>{
+    //return this.http.get(environment.apiUrl + 'home/v1', {headers: {Authorization: this.createBasicAuthToken(this.username, this.password)}, responseType: 'text' as 'json'})
+
+    return this.http.post(environment.apiUrl + 'home/v1', null)
+  }
+  
 }

@@ -26,7 +26,7 @@ public class AccountService {
     	{
     		throw new EmailExistsException();
     	}
-    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
     	String encodedPassword = encoder.encode(account.getPassword());
     	account.setPassword(encodedPassword);
     	return accountRepository.save(account);

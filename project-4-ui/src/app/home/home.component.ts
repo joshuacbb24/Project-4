@@ -20,6 +20,15 @@ export class HomeComponent implements OnInit {
     {
       this.router.navigate(["/login"])
     }
+    
+    this.restApiService.testLoginStatus().subscribe({
+      next: (data) => {
+        console.log("returned", data)
+      },
+      error: (err) => {
+        console.log("error", err)
+      }
+    })
     const id = this.actRoute.snapshot.paramMap.get('id');
   }
 
