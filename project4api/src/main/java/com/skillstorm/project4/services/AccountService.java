@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.skillstorm.project4.dtos.AccountDto;
 import com.skillstorm.project4.exceptions.EmailExistsException;
 import com.skillstorm.project4.models.Account;
 import com.skillstorm.project4.respositories.AccountRepository;
@@ -22,13 +23,19 @@ public class AccountService {
     	return accountRepository.findAll();
     }
     
-    public Account createAccount(Account account) throws EmailExistsException {
-    	if (accountRepository.findByEmail(account.getEmail()) != null)
+    public Account createAccount(AccountDto accountInfo) throws EmailExistsException {
+    	if (accountRepository.findByEmail(accountInfo.getEmail()) != null)
     	{
     		throw new EmailExistsException();
     	}
+    	Account account = new Account();
+    	account.setEmail(accountInfo.getEmail());
+    	account.setFirstName(accountInfo.getFirstName());
+    	account.setLastName(accountInfo.getLastName());
+    	account.setAvatar(accountInfo.getAvatar());
+    	
     	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(10);
-    	String encodedPassword = encoder.encode(account.getPassword());
+    	String encodedPassword = encoder.encode(accountInfo.getPassword());
     	account.setPassword(encodedPassword);
     	
     	// create object of Random class

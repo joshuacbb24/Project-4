@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
-import { RestapiService } from '../restapi.service';
+import { RestapiService } from '../services/restapi.service';
 
 @Component({
   selector: 'app-landing-page',

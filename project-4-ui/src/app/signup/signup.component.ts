@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
-import { RestapiService } from '../restapi.service';
+import { RestapiService } from '../services/restapi.service';
+import { Account } from '../models/account';
+import { FormControl, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators, FormGroup, AbstractControl } from '@angular/forms';
 
 @Component({
   selector: 'app-signup',
@@ -9,9 +11,23 @@ import { RestapiService } from '../restapi.service';
 })
 export class SignupComponent implements OnInit {
 
-  constructor() { }
+  account2: Array<Account> = [];
+  account: any;
+
+
+  constructor(private restApiService: RestapiService) { }
 
   ngOnInit(): void {
   }
 
+  register() :void{
+    this.restApiService.register(this.account).subscribe({
+      next: () => {
+
+      },
+      error: () =>{
+
+      }
+    })
+  }
 }

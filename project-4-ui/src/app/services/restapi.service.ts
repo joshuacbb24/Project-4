@@ -36,6 +36,10 @@ export class RestapiService {
 
   }
 
+  register(account: any) :Observable<any>{
+    return this.http.post(environment.apiUrl + 'account/register', account)
+  }
+
   createBasicAuthToken(username: string, password:string){
     return 'Basic '+ window.btoa(username+":"+password);
   }

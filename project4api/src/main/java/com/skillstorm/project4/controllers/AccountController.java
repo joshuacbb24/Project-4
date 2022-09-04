@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skillstorm.project4.dtos.AccountDto;
 import com.skillstorm.project4.models.Account;
 import com.skillstorm.project4.services.AccountService;
 
@@ -35,9 +36,8 @@ public class AccountController {
     }
     
     @PostMapping("/register")
-    public Account createAccount(@RequestBody Account account) {
-    	accountService.createAccount(account);
-    	return null;
+    public Account createAccount(@RequestBody AccountDto account) {
+    	return accountService.createAccount(account);
     }
     
     
