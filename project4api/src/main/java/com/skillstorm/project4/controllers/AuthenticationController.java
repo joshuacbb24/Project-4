@@ -19,8 +19,7 @@ import com.skillstorm.project4.models.CustomUserDetails;
 public class AuthenticationController {
 
     @GetMapping("/login")
-    public Account login(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
-    	
-    	return customUserDetails.getAccount();
+    public void login(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
     }
 }

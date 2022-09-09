@@ -7,13 +7,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.skillstorm.project4.dtos.GoalDto;
 import com.skillstorm.project4.models.Account;
+import com.skillstorm.project4.models.CustomUserDetails;
 import com.skillstorm.project4.models.Goal;
 import com.skillstorm.project4.services.GoalService;
 
@@ -22,6 +28,7 @@ import com.skillstorm.project4.services.GoalService;
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(value = "/home/v1")
 public class GoalController {
+	
     @Autowired
     public GoalService goalService;
     
@@ -32,14 +39,20 @@ public class GoalController {
     }
     */
     @GetMapping
-    public ResponseEntity<String> fetchHello() {
-    	
-    	return new ResponseEntity<>("Hello Spring Security!", HttpStatus.OK);
+    public ResponseEntity<List<Goal>> fetchGoals(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    	List<Goal> goals = goalService.fetchGoals(customUserDetails);
+    	return new ResponseEntity<>(goals, HttpStatus.OK);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Goal> fetchGoal(@AuthenticationPrincipal CustomUserDetails customUserDetails, @PathVariable int id){
+    	Goal goal = goalService.fetchGoal(id);
+    	return new ResponseEntity<Goal>(goal, HttpStatus.OK);
     }
     
     @PostMapping
-    public ResponseEntity<Account> postHello() {
-    	Account account = new Account();
-    	return new ResponseEntity<>(account, HttpStatus.OK);
+    public ResponseEntity<Goal> createGoal(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody GoalDto Goal) {
+    	Goal newGoal = goalService.createGoal(customUserDetails, Goal); 
+    	return new ResponseEntity<>(newGoal, HttpStatus.OK);
     }
 }

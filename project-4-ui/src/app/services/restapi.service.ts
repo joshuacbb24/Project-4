@@ -36,6 +36,11 @@ export class RestapiService {
 
   }
 
+  getInfo() :Observable<any>{
+    return this.http.get(environment.apiUrl + 'account', 
+    {headers: {Authorization: this.createBasicAuthToken(this.cookieService.get('username'), this.cookieService.get('password') ) } })
+  }
+
   register(account: any) :Observable<any>{
     return this.http.post(environment.apiUrl + 'account/register', account)
   }

@@ -1,1 +1,81 @@
-<p>edit-goals works!</p>
+<section class="goal-content">
+    <div class="create-header">
+        <div class="buttons">
+            <button class="create" (click)="enableEdit()" [hidden]="editEnabled">Edit</button>
+        </div>
+    </div>
+<form [formGroup]="editForm" #formDirective="ngForm" class="modal-content creation-form" name="creation-form" (ngSubmit)="submit(editForm, formDirective)">
+    <div class="row">
+        <div class="col">
+            <div class="img-container">
+
+            </div>
+        </div>
+        <div class="col">
+            <table class="example-full-width" cellspacing="0">
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <label>Goal Name</label>
+                            <input matInput type="text" [value]="goal.name" formControlName="name" name="name"/>
+                            <mat-error *ngIf="editForm.get('name')?.hasError('required')"> Enter a valid name
+                            </mat-error>
+                          </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="picker1" [value]="goal.endDate" [min]="today" (dateInput)="getDate($event.value)">
+                            <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
+                        <mat-datepicker #picker1 ></mat-datepicker>
+                    </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <label>Goal Amount</label>
+                            <input matInput type="number" [value]="goal.targetGoal" min="0.01" step="0.01" formControlName="amount" name="amount" placeholder="$0.00"/>
+                            <mat-error *ngIf="editForm.get('amount')?.hasError('required')"> Enter a valid name
+                            </mat-error>
+                          </mat-form-field>
+                    </td>
+                    <td>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <label>Current Amount</label>
+                            <input matInput type="number" [value]="goal.currentAmount" disabled/>
+                        </mat-form-field>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <mat-form-field class="example-full-width" appearance="outline">
+                            <label>Description</label>
+                            <textarea matInput style="resize: none" [value]="goal.description" formControlName="description" name="description"></textarea>
+                            <mat-error *ngIf="editForm.get('description')?.hasError('required')"> Enter a description
+                            </mat-error>
+                          </mat-form-field>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <footer class="create-footer" [hidden]="!editEnabled">
+        <button class="button cancel" mat-dialog-close (click)="cancelEdit(editForm, formDirective)">Cancel</button>
+        <button class="button submit" type="submit">Submit</button>
+    </footer>
+</form>
+</section>
+<div class="modal">
+    <form action="" class="modal-content">
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+
+            </tr>
+            <tr>
+
+            </tr>
+        </table>
+    </form>
+</div>

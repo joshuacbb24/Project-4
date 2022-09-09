@@ -1,3 +1,4 @@
+<section class="login-component">
 <div class="container col-lg-6">
   <h1 class="text-center">Login</h1>
   <div class="card">
@@ -6,8 +7,8 @@
         <div class="alert alert-warning" *ngIf='invalidLogin'>{{errorMessage}}</div>
         <div class="alert alert-success" *ngIf='loginSuccess'>{{successMessage}}</div>
         <div class="form-group">
-          <label for="email">User Name :</label>
-          <input type="text" class="form-control" id="username" [(ngModel)]="username" placeholder="Enter User Name"
+          <label for="email">Email :</label>
+          <input type="text" class="form-control" id="username" [(ngModel)]="username" placeholder="Enter Email"
             name="username">
         </div>
         <div class="form-group">
@@ -21,3 +22,4 @@
     </div>
   </div>
 </div>
+</section>

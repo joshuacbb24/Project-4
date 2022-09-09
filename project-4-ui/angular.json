@@ -23,11 +23,13 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/custom-theme.scss",
               "./node_modules/ngx-tagify/styles/tagify.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/chart.js/dist/chart.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -92,11 +94,13 @@
               "src/assets"
             ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/custom-theme.scss",
               "./node_modules/ngx-tagify/styles/tagify.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/chart.js/dist/chart.js"
+            ]
           }
         }
       }

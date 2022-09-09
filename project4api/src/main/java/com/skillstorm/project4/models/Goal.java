@@ -1,6 +1,8 @@
 package com.skillstorm.project4.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,6 +18,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -29,39 +33,82 @@ public class Goal implements Serializable {
 	private int id;
 	@Column(name = "NAME", nullable = false, length = 50)
 	private String name;
-	@Column(name = "START_DATE", nullable = false, length = 10)
-	private String startDate;
 	@Column(name = "END_DATE", nullable = false, length = 10)
 	private String endDate;
+	@Column(name = "DESCRIPTION", nullable = true, length = 100)
+	private String description;
+	//@Column(name = "FAVORITED", nullable = false)
+	//private int favorited;
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "ACCOUNT_GOAL", joinColumns = { @JoinColumn(name = "ACCOUNT_ID") }, inverseJoinColumns = {
-			@JoinColumn(name = "GOAL_ID") })
+	@JoinTable(name = "ACCOUNT_GOAL", joinColumns = { @JoinColumn(name = "GOAL_ID") }, inverseJoinColumns = {
+			@JoinColumn(name = "ACCOUNT_ID") })
 	private Set<Account> account;
 	@Column(name = "TARGET_GOAL", nullable = false)
-	private float targetGoal;
+	private BigDecimal targetGoal;
 	@Column(name = "CURRENT_AMOUNT", nullable = false)
-	private float currentAmount;
+	private BigDecimal currentAmount;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "goal")
 	private Set<Transaction> transaction;
 
 	public Goal() {
 	}
 
-	public Goal(String name, String startDate, String endDate, Set<Account> account, float targetGoal, float currentAmount) {
+
+
+	public Goal(String name, String endDate, String description, BigDecimal targetGoal) {
+		super();
 		this.name = name;
-		this.startDate = startDate;
+		this.endDate = endDate;
+		this.description = description;
+		this.targetGoal = targetGoal;
+	}
+
+
+
+	public Goal(String name, String endDate, Set<Account> account, BigDecimal targetGoal,
+			BigDecimal currentAmount) {
+		super();
+		this.name = name;
 		this.endDate = endDate;
 		this.account = account;
 		this.targetGoal = targetGoal;
 		this.currentAmount = currentAmount;
 	}
 
-	public Goal(int id, String name, String startDate, String endDate, Set<Account> account, float targetGoal,
-			long currentAmount, Set<Transaction> transaction) {
+
+
+	public Goal(String name, String endDate, String description, Set<Account> account,
+			BigDecimal targetGoal) {
+		super();
+		this.name = name;
+		this.endDate = endDate;
+		this.description = description;
+		this.account = account;
+		this.targetGoal = targetGoal;
+	}
+
+
+
+	public Goal(String name, String endDate, String description, Set<Account> account,
+			BigDecimal targetGoal, BigDecimal currentAmount) {
+		super();
+		this.name = name;
+		this.endDate = endDate;
+		this.description = description;
+		this.account = account;
+		this.targetGoal = targetGoal;
+		this.currentAmount = currentAmount;
+	}
+
+
+
+	public Goal(int id, String name, String endDate, String description, Set<Account> account,
+			BigDecimal targetGoal, BigDecimal currentAmount, Set<Transaction> transaction) {
+		super();
 		this.id = id;
 		this.name = name;
-		this.startDate = startDate;
 		this.endDate = endDate;
+		this.description = description;
 		this.account = account;
 		this.targetGoal = targetGoal;
 		this.currentAmount = currentAmount;
@@ -84,14 +131,6 @@ public class Goal implements Serializable {
 		this.name = name;
 	}
 
-	public String getStartDate() {
-		return startDate;
-	}
-
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-
 	public String getEndDate() {
 		return endDate;
 	}
@@ -108,19 +147,19 @@ public class Goal implements Serializable {
 		this.account = account;
 	}
 
-	public float getTargetGoal() {
+	public BigDecimal getTargetGoal() {
 		return targetGoal;
 	}
 
-	public void setTargetGoal(float targetGoal) {
+	public void setTargetGoal(BigDecimal targetGoal) {
 		this.targetGoal = targetGoal;
 	}
 
-	public float getCurrentAmount() {
+	public BigDecimal getCurrentAmount() {
 		return currentAmount;
 	}
 
-	public void setCurrentAmount(float currentAmount) {
+	public void setCurrentAmount(BigDecimal currentAmount) {
 		this.currentAmount = currentAmount;
 	}
 
@@ -132,12 +171,17 @@ public class Goal implements Serializable {
 		this.transaction = transaction;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -149,16 +193,27 @@ public class Goal implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Goal other = (Goal) obj;
-		if (id != other.id)
-			return false;
-		return true;
+		return id == other.id;
 	}
+
+
 
 	@Override
 	public String toString() {
-		return "Goal [account=" + account + ", currentAmount=" + currentAmount + ", endDate=" + endDate + ", id=" + id
-				+ ", name=" + name + ", startDate=" + startDate + ", targetGoal=" + targetGoal + ", transaction="
-				+ transaction + "]";
+		return "Goal [id=" + id + ", name=" + name + ", endDate=" + endDate + ", description=" + description
+				+ ", account=" + account + ", targetGoal=" + targetGoal + ", currentAmount=" + currentAmount
+				+ ", transaction=" + transaction + "]";
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 }

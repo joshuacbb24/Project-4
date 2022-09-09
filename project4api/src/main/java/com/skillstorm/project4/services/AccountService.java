@@ -23,6 +23,10 @@ public class AccountService {
     	return accountRepository.findAll();
     }
     
+    public Account fetchAccount(String email) {
+    	return accountRepository.findByEmail(email);
+    }
+    
     public Account createAccount(AccountDto accountInfo) throws EmailExistsException {
     	if (accountRepository.findByEmail(accountInfo.getEmail()) != null)
     	{

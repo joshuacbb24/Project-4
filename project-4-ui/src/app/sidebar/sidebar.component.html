@@ -1,1 +1,14 @@
-<p>sidebar works!</p>
+<div class="sidebar">
+    <div class="logo-details">
+        <i class='bx bxl-java'></i>
+        <span class="logo_name">SpyGlass</span>
+    </div>
+    <ul *ngIf="isLoggedIn" class="nav-links">
+        <li>
+            <a [routerLink]="['/home']" routerLinkActive="active">
+                <i class='bx bx-grid-alt' ></i>
+                <span class="link_name">Dashboard</span>
+            </a>
+        </li>
+    </ul>
+</div>

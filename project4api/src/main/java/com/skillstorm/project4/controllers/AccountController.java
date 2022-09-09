@@ -3,6 +3,7 @@ package com.skillstorm.project4.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.skillstorm.project4.dtos.AccountDto;
 import com.skillstorm.project4.models.Account;
+import com.skillstorm.project4.models.CustomUserDetails;
 import com.skillstorm.project4.services.AccountService;
 
 @RestController
@@ -26,13 +28,8 @@ public class AccountController {
     public AccountService accountService;
     
     @GetMapping
-    public List<Account> fetchAccounts() {
-    	return null;
-    }
-    
-    @GetMapping("/{email}")
-    public Account fetchAccountByEmail(@PathVariable String email) {
-    	return null;
+    public Account fetchAccountByEmail(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+    	return customUserDetails.getAccount();
     }
     
     @PostMapping("/register")

@@ -56,11 +56,26 @@ import { GoalListingComponent } from './goal-listing/goal-listing.component';
 import { SignupComponent } from './signup/signup.component';
 import { BackgroundInfoComponent } from './background-info/background-info.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
-import { RestapiService } from './restapi.service';
-import { HttpInterceptorServiceService } from './http-interceptor-service.service';
+import { RestapiService } from './services/restapi.service';
+import { HttpInterceptorServiceService } from './services/http-interceptor-service.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpXsrfTokenExtractor } from '@angular/common/http';
 import { ActivatedRouteComponent } from './activated-route/activated-route.component';
+import { CalendarModule } from 'primeng/calendar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+import {MessagesModule} from 'primeng/messages';
+import {MessageModule} from 'primeng/message';
+import { CreateGoalComponent } from './create-goal/create-goal.component';
+import {FileUploadModule} from 'primeng/fileupload';
+import {ChartModule} from 'primeng/chart';
+import {ToastModule} from 'primeng/toast';
+import {TabViewModule} from 'primeng/tabview';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
+
 
 @NgModule({
   declarations: [
@@ -77,7 +92,9 @@ import { ActivatedRouteComponent } from './activated-route/activated-route.compo
     SignupComponent,
     BackgroundInfoComponent,
     LandingPageComponent,
-    ActivatedRouteComponent
+    ActivatedRouteComponent,
+    CreateGoalComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -122,6 +139,16 @@ import { ActivatedRouteComponent } from './activated-route/activated-route.compo
     MatTreeModule,
     ReactiveFormsModule,
     DatePipe,
+    InputNumberModule,
+    InputTextareaModule,
+    InputTextModule,
+    MessageModule,
+    MessagesModule,
+    FileUploadModule,
+    ChartModule,
+    ToastModule,
+    TabViewModule,
+
     //TagifyModule.forRoot(),
   ],
   providers: [DatePipe, RestapiService, {

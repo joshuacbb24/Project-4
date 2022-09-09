@@ -1,11 +1,79 @@
-<header>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div><a href="https://www.javaguides.net" class="navbar-brand">JavaGuides</a></div>
-        <ul class="navbar-nav navbar-collapse justify-content-end">
-            <li>
-                <a *ngIf="isLoggedIn" class="nav-link" href="/logout" (click)=logout()>Logout</a>
-            </li>
-        </ul>
-    </nav>
-  </header>
-<p>home works!</p>
+<section class="home-content">
+    <div class="create-header">
+        <div class="buttons">
+            <button class="create" (click)="modalHidden=false">New</button>
+        </div>
+    </div>
+    <div class="goals-container" >
+        <div class="card" *ngFor="let goal of goals">
+            <app-goal-listing
+            [id] = "goal.id"
+            [title]="goal.name"
+            [targetGoal]="goal.targetGoal"
+            [currentAmount]="goal.currentAmount"
+          ></app-goal-listing>
+        </div>
+    </div>
+</section>
+<div class="modal" [hidden]="modalHidden">
+    <form [formGroup]="creationForm" #formDirective="ngForm" class="modal-content creation-form" name="creation-form" (ngSubmit)="create(creationForm, formDirective)">
+        <header class="create-header">
+            <span class="create-title">Create Goal</span>
+            <span class="close" title="Close Modal" (click)="closeModal(creationForm, formDirective)">&times;</span>
+        </header>
+        <div class="row">
+            <div class="col">
+                <div class="img-container">
+                   <!-- <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="filesize" [auto]="false" chooseLabel="Browse"></p-fileUpload>-->
+                </div>
+            </div>
+            <div class="col">
+                <table class="example-full-width" cellspacing="0">
+                    <tr>
+                        <td>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <label>Goal Name</label>
+                                <input matInput type="text" formControlName="name" name="name" />
+                                <mat-error *ngIf="creationForm.get('name')?.hasError('required')"> Enter a valid name
+                                </mat-error>
+                              </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Choose a date</mat-label>
+                                <input matInput [matDatepicker]="picker1" [min]="today" (dateInput)="getDate($event.value)" formControlName="date">
+                                <mat-error *ngIf="creationForm.get('date')?.hasError('required')"> Enter a valid date
+                                </mat-error>
+                                <mat-datepicker-toggle matSuffix [for]="picker1" ></mat-datepicker-toggle>
+                            <mat-datepicker #picker1 ></mat-datepicker>
+                        </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <label>Amount</label>
+                                <input matInput type="number" min="0.01" step="0.01" formControlName="amount" name="amount" placeholder="$0.00"/>
+                                <mat-error *ngIf="creationForm.get('amount')?.hasError('required')"> Enter a valid amount
+                                </mat-error>
+                              </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field class="example-full-width" appearance="outline">
+                                <label>Description</label>
+                                <textarea matInput style="resize: none" formControlName="description" name="description"></textarea>
+                                <mat-error *ngIf="creationForm.get('description')?.hasError('required')"> Enter a description
+                                </mat-error>
+                              </mat-form-field>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <footer class="create-footer">
+            <button class="button cancel" mat-dialog-close (click)="closeModal(creationForm, formDirective)">Cancel</button>
+            <button class="button submit" type="submit">Submit</button>
+        </footer>
+    </form>
+</div>

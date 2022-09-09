@@ -1,1 +1,22 @@
-<p>goal-listing works!</p>
+<!-- listing card container -->
+<a [routerLink]="['/goal', id]">
+<article>
+
+    <!-- listing image from database -->
+       <!--<img src="{{ imageSrc }}" alt="{{ title }}"> -->
+       <p-chart type="doughnut" [data]="data" [options]="chartOptions" [style]="{'width': '20%'}"></p-chart>
+    
+    <div class="text-and-buttons">
+ 
+       <div class="text">
+ 
+          <!-- listing title from database -->
+          <h2>{{ title }}</h2>
+ 
+       </div>
+ 
+ 
+    </div>
+ 
+ </article>
+</a>

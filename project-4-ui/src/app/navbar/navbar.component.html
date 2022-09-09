@@ -1,17 +1,26 @@
-<nav>
-    <div class="sidebar-button">
+<nav class="navbar" id="navbar">
+    <div *ngIf="isLoggedIn" class="sidebar-button">
         <i class='bx bx-menu' (click)="toggleSidebar()"></i>
-        <span class="dashboard" id="dashboard">Dashboard</span>
+        <span class="dashboard" id="dashboard">{{title}}</span>
     </div>
     <!--
-    <div class="search-box">
+    <div *ngIf="isLoggedIn" class="search-box">
         <input type="text" placeholder="Search...">
         <a [routerLink]="'/inventory'"><i class="bx bx-search"></i></a>
     </div>
     -->
-    <div class="profile-details">
-    <img src="/assets/images/514-5147412_default-avatar-icon.png" alt="" srcset="">
-    <span class="admin_name">John Doe</span>
-    <i class='bx bxs-chevron-down'></i>
+    <div *ngIf="isLoggedIn" class="profile-details">
+        <div class="profile-pic-wrapper">
+            <img *ngIf="avatar.length>0" src="" alt="" srcset="">
+        </div>
+        <span class="admin_name">{{name |titlecase}}</span>
+        <i class='bx bxs-chevron-down' (click)="toggle()"></i>
+            <div *ngIf="showDropdown" class="dropdown-content">
+                <ul class="navbar-nav navbar-collapse justify-content-end">
+                    <li>
+                        <a *ngIf="isLoggedIn" class="nav-link" href="/logout" (click)=logout()>Logout</a>
+                    </li>
+                </ul>
+            </div>
     </div>
 </nav>

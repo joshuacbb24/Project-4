@@ -1,9 +1,38 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { RestapiService } from './restapi.service';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoalsService {
 
-  constructor() { }
+  constructor(private cookieService:CookieService, private http:HttpClient, private restApiService:RestapiService) {
+
+   }
+
+   fetchGoal(id: any) :Observable<any> {
+    return this.http.get(environment.apiUrl + 'home/v1/' + id, {headers: {Authorization: this.restApiService.createBasicAuthToken(this.cookieService.get('username'), this.cookieService.get('password') ) } })
+   }
+
+   fetchGoals() :Observable<any> {
+    return this.http.get(environment.apiUrl + 'home/v1', {headers: {Authorization: this.restApiService.createBasicAuthToken(this.cookieService.get('username'), this.cookieService.get('password') ) } })
+   }
+
+   createGoal(goal: any) :Observable<any> {
+    return this.http.post(environment.apiUrl + 'home/v1', goal)
+   }
+
+   updateGoal() :Observable<any> {
+    return this.http.put(environment.apiUrl + 'home/v1', null)
+   }
+
+   deleteGoal(id: any) :Observable<any> {
+    return this.http.delete(environment.apiUrl + 'home/v1/' + id)
+   } 
 }

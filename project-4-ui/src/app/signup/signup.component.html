@@ -1,22 +1,78 @@
 <div class="container col-lg-6">
-    <h1 class="text-center">Login</h1>
-    <div class="card">
-      <div class="card-body">
-        <form class="form-group">
-         <!-- <div class="alert alert-warning" *ngIf='invalidLogin'>{{errorMessage}}</div>
-          <div class="alert alert-success" *ngIf='loginSuccess'>{{successMessage}}</div>-->
-          <div class="form-group">
-            <label for="email">User Name :</label>
-            <!--<input type="text" class="form-control" id="username" [(ngModel)]="username" placeholder="Enter User Name"
-              name="username">-->
-          </div>
-          <div class="form-group">
-            <label for="pwd">Password:</label>
-            <!-- <input type="password" class="form-control" [(ngModel)]="password" id="password" placeholder="Enter password"
-              name="password">-->
-          </div>
-          <!-- <button (click)="" class="btn btn-success">Login</button>-->
-        </form>
-      </div>
+
+  <div class="card">
+    <h1 class="text-center">Signup</h1>
+    <div class="card-body">
+      <p class="error" *ngIf="existingAccount">Account already exists</p>
+      <form [formGroup]="registrationForm" #formDirective="ngForm" class="example-form" name="registration-form" (ngSubmit)="register()"
+        id="register-form">
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field appearance="outline">
+                <label>First Name</label>
+                <input matInput type="text" formControlName="firstName" name="firstName" />
+                <mat-error *ngIf="registrationForm.get('firstName')?.hasError('required')"> Enter a valid First
+                  Name </mat-error>
+                <mat-error *ngIf="registrationForm.get('firstName')?.hasError('pattern')"> Enter a valid First
+                  Name </mat-error>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <label>Last Name</label>
+                <input matInput type="text" formControlName="lastName" name="lastName" />
+                <mat-error *ngIf="registrationForm.get('lastName')?.hasError('required')"> Enter a valid Last
+                  Name </mat-error>
+                <mat-error *ngIf="registrationForm.get('lastName')?.hasError('pattern')"> Enter a valid Last Name
+                </mat-error>
+              </mat-form-field>
+            </td>
+
+          </tr>
+        </table>
+
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field appearance="outline" [style.width.px]=405>
+                <label>Email</label>
+                <input matInput type="email" formControlName="email" name="email" />
+                <mat-error *ngIf="registrationForm.get('email')?.hasError('required')"> Enter a valid email
+                  address
+                </mat-error>
+                <mat-error *ngIf="registrationForm.get('email')?.hasError('email')"> Enter a valid email
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+        <table class="example-full-width" cellspacing="0">
+          <tr>
+            <td>
+              <mat-form-field appearance="outline">
+                <label>Password</label>
+                <input matInput type="password" formControlName="password" name="password" />
+                <mat-error *ngIf="registrationForm.get('password')?.hasError('required')"> Enter a valid password
+                </mat-error>
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field appearance="outline">
+                <label>Repeat your password</label>
+                <input matInput type="password" formControlName="password2" name="password2" />
+                <mat-error *ngIf="registrationForm.get('password2')?.hasError('password2')"> Password does not match
+                </mat-error>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+        <button class="btn btn-primary btn-lg">Register</button>
+
+      </form>
+      <div class="link">
+      Already have an account? <a [routerLink]="['/login']">Log in</a>
+    </div>
     </div>
   </div>
+</div>

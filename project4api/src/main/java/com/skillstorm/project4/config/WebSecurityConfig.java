@@ -65,7 +65,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		*/
 		// http.authorizeRequests().mvcMatchers("/signup",
 		// "/login").anonymous().anyRequest().authenticated();
-		http.authorizeRequests().mvcMatchers(HttpMethod.OPTIONS, "/login/**", "/account/register/**").permitAll().anyRequest().authenticated().and().csrf().disable();
+		http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/auth/v1/login").permitAll();
+		http.authorizeRequests().mvcMatchers(HttpMethod.POST, "/account/register").permitAll();
+		http.authorizeRequests().mvcMatchers(HttpMethod.POST, "/logout").permitAll();
+		http.authorizeRequests().anyRequest().authenticated();
+		http.csrf().disable();
 
 		http.logout().permitAll();
 		http.logout().deleteCookies("JSESSIONID").invalidateHttpSession(true).logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)));

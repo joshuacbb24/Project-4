@@ -19,7 +19,7 @@ export class HttpInterceptorServiceService {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json',
                 'Authorization': 'Basic ' + window.btoa(this.cookieService.get('username')+ ":" + this.cookieService.get('password') ),
-                'X-XSRF-TOKEN': this.xsrfTokenExtractor.getToken() as string,
+                //'X-XSRF-TOKEN': this.xsrfTokenExtractor.getToken() as string,
             })/*,withCredentials: true*/
         });
         return next.handle(authReq);

@@ -1,6 +1,7 @@
 package com.skillstorm.project4.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +26,7 @@ public class Transaction implements Serializable {
 	@Column(name = "TRANSACTION_ID")
 	private int id;
 	@Column(name = "AMOUNT", nullable = false)
-	private float amount;
+	private BigDecimal amount;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
 	private Account account;
@@ -36,13 +37,13 @@ public class Transaction implements Serializable {
 	public Transaction() {
 	}
 
-	public Transaction(float amount, Account account, Goal goal) {
+	public Transaction(BigDecimal amount, Account account, Goal goal) {
 		this.amount = amount;
 		this.account = account;
 		this.goal = goal;
 	}
 
-	public Transaction(int id, float amount, Account account, Goal goal) {
+	public Transaction(int id, BigDecimal amount, Account account, Goal goal) {
 		this.id = id;
 		this.amount = amount;
 		this.account = account;
@@ -57,11 +58,11 @@ public class Transaction implements Serializable {
 		this.id = id;
 	}
 
-	public float getAmount() {
+	public BigDecimal getAmount() {
 		return amount;
 	}
 
-	public void setAmount(float amount) {
+	public void setAmount(BigDecimal amount) {
 		this.amount = amount;
 	}
 
