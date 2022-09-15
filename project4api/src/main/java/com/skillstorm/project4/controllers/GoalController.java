@@ -9,9 +9,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,9 +52,20 @@ public class GoalController {
     	return new ResponseEntity<Goal>(goal, HttpStatus.OK);
     }
     
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Goal> createGoal(@AuthenticationPrincipal CustomUserDetails customUserDetails, @RequestBody GoalDto Goal) {
     	Goal newGoal = goalService.createGoal(customUserDetails, Goal); 
     	return new ResponseEntity<>(newGoal, HttpStatus.OK);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Goal> updateGoal(@RequestBody GoalDto goal, @PathVariable int id, @AuthenticationPrincipal CustomUserDetails customUserDetails){
+    	Goal newGoal = goalService.updateGoal(id, goal, customUserDetails); 
+    	return new ResponseEntity<>(newGoal, HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/{id}")
+    public void deleteGoal(@PathVariable int id) {
+    	goalService.deleteGoal(id);
     }
 }

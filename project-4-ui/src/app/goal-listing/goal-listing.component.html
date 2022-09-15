@@ -4,15 +4,22 @@
 
     <!-- listing image from database -->
        <!--<img src="{{ imageSrc }}" alt="{{ title }}"> -->
-       <p-chart type="doughnut" [data]="data" [options]="chartOptions" [style]="{'width': '20%'}"></p-chart>
-    
+       <!--<p-chart type="doughnut" [data]="data" [options]="options" width="200" height="200"></p-chart>-->
+    <div class="img-container">
+      <img class="card-img" src="../../assets/images/default-goal-icon.png" alt="">
+    </div>
     <div class="text-and-buttons">
  
        <div class="text">
  
           <!-- listing title from database -->
           <h2>{{ title }}</h2>
- 
+          
+         <h5>Target Goal: {{targetGoal}}</h5>
+
+         <h5>By: {{date}}</h5>
+
+         <h5>Current Amount: {{currentAmount}}</h5>
        </div>
  
  

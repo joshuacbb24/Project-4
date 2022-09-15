@@ -3,7 +3,7 @@
   <div class="card">
     <h1 class="text-center">Signup</h1>
     <div class="card-body">
-      <p class="error" *ngIf="existingAccount">Account already exists</p>
+      <div class="alert alert-warning" *ngIf="existingAccount">Account already exists</div>
       <form [formGroup]="registrationForm" #formDirective="ngForm" class="example-form" name="registration-form" (ngSubmit)="register()"
         id="register-form">
         <table class="example-full-width" cellspacing="0">

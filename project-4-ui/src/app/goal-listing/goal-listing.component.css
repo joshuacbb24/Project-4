@@ -1,9 +1,8 @@
 /* listing container */
 article {
     display: inline-block;
-    /*width: 294px;*/
-    max-width: 294px;
-    min-width: 294px;
+    max-width: fit-content;
+    min-width: fit-content;
     border: solid 1px #bdbdbd;
     margin: 0px 10px 10px 0px;
     border-radius: 5px;
@@ -17,4 +16,25 @@ article {
 a{
     text-decoration: none;
     color: #000;
+}
+/* product image */
+.img-container {
+    width: 200px;
+    height: 200px;
+    border: solid 1px #bdbdbd;
+    margin: 9px 9px 4px 9px;
+}
+
+.img-container img {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+.text-and-buttons{
+    margin-left: 9px;
+}
+
+h5{
+    margin: 0;
 }

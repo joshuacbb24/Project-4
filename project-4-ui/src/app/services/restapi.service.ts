@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpXsrfTokenExtractor } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
@@ -20,7 +20,7 @@ export class RestapiService {
   USER_NAME_SESSION_ATTRIBUTE_NAME = ""
   token=""
 
-  constructor(private cookieService:CookieService, private http:HttpClient) { }
+  constructor(private cookieService:CookieService, private http:HttpClient, private xsrfTokenExtractor: HttpXsrfTokenExtractor) { }
 
 
 
@@ -28,7 +28,15 @@ export class RestapiService {
     //const headers = new HttpHeaders({Authorization: this.createBasicAuthToken(username, password)});
     console.log("username", username, "password", password);
     return this.http.get(environment.apiUrl + 'auth/v1/login', 
-    {headers: {Authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res) => {
+    {headers: {Authorization: this.createBasicAuthToken(username, password) } }).pipe(map((res: any) => {
+      console.log(res);
+      
+      if(res && res.token) {
+        this.cookieService.set('X-XSRF-TOKEN',  res.token);
+      }
+      
+      let token = this.xsrfTokenExtractor.getToken() as string
+      console.log("login cookie", token)
     this.username = username;
     this.password = password;
     this.registerSuccessfulLogin(username, password, res);
@@ -64,6 +72,8 @@ export class RestapiService {
     this.password = "";
     this.cookieService.delete('username')
     this.cookieService.delete('password')
+    this.cookieService.delete('X-XSRF-TOKEN')
+    this.cookieService.delete('token')
     return this.http.post(environment.apiUrl + 'logout', null)
   }
 

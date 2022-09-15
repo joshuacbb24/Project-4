@@ -4,7 +4,7 @@ import { MessageService } from '../services/message.service';
 import { RestapiService } from '../services/restapi.service';
 import { GoalsService } from '../services/goals.service';
 import { FormControl, FormGroupDirective, NgForm, ValidationErrors, ValidatorFn, Validators, FormGroup, AbstractControl } from '@angular/forms';
-
+import { HttpClient, HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -21,10 +21,17 @@ export class HomeComponent implements OnInit {
   filesize = 1000000;
   goal: any;
   goals: any;
+  //selectedFile: File;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  message: string = "";
+  imageName: any;
 
   creationForm = new FormGroup({
     name: new FormControl('', [Validators.pattern(/^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/), Validators.required]),
     amount: new FormControl('', [Validators.pattern(/(?=.*?\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|\d+)?(\.\d{1,2})?$/), Validators.required]),
+    currentAmount: new FormControl('', [Validators.pattern(/(?=.*?\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|\d+)?(\.\d{1,2})?$/), Validators.required]),
     description: new FormControl('', [Validators.pattern(/^(?=.{1,40}$)[a-zA-Z]+(?:[-'\s][a-zA-Z]+)*$/), Validators.required]),
     date: new FormControl('', [Validators.required])
   })
@@ -56,22 +63,10 @@ export class HomeComponent implements OnInit {
       error: (err) => {
 
       }
-    })
+    }
+    )
 
     const id = this.actRoute.snapshot.paramMap.get('id');
-  }
-
-  logout() {
-    this.restApiService.logout().subscribe({
-      next: () => {
-        this.messageService.sendUpdate(false, "");
-        //this.router.navigate(["/login"]);
-      },
-      error: () => {
-
-      }
-
-    });
   }
 
   create(myForm: any, formDirective: any) {
@@ -85,6 +80,7 @@ export class HomeComponent implements OnInit {
       description: this.creationForm.controls['description'].value,
       targetGoal: this.creationForm.controls['amount'].value,
       endDate: date,
+      currentAmount: this.creationForm.controls['currentAmount'].value
     }
 
     this.goalApiService.createGoal(this.goal).subscribe({
@@ -122,4 +118,13 @@ export class HomeComponent implements OnInit {
     this.dateEnd = new Date(e);
     return this.dateEnd = this.dateEnd.getFullYear() + "-" + (this.dateEnd.getMonth() + 1) + "-" + this.dateEnd.getDate();
   }
+  /*
+  onFileChanged(e: any) {
+    this.selectedFile = e.target.files[0];
+  }
+  onUpload() {
+    const uploadImageData = new FormData();
+    uploadImageData.append('imageFile', this.selectedFile, this.selectedFile.name);
+  }
+  */
 }

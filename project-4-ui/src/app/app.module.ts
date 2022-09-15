@@ -74,6 +74,7 @@ import {ChartModule} from 'primeng/chart';
 import {ToastModule} from 'primeng/toast';
 import {TabViewModule} from 'primeng/tabview';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import {HttpClientXsrfModule}from '@angular/common/http'
 
 
 
@@ -148,6 +149,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     ChartModule,
     ToastModule,
     TabViewModule,
+    HttpClientXsrfModule.withOptions({
+      cookieName: 'XSRF-TOKEN',
+      headerName: 'X-XSRF-TOKEN'
+    }),
 
     //TagifyModule.forRoot(),
   ],

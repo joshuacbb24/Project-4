@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   avatar = ''
   name = ""
 
-  constructor(private messageService: MessageService, restApiService: RestapiService) {
+  constructor(private messageService: MessageService, restApiService: RestapiService, private router:Router) {
     this.restApiService = restApiService;
 
   }
@@ -59,7 +59,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.restApiService.logout().subscribe({
       next: () => {
-        //this.router.navigate(["/login"]);
+        this.router.navigate(["/login"]);
       },
       error: () => {
 

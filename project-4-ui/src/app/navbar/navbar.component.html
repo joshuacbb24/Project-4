@@ -18,7 +18,7 @@
             <div *ngIf="showDropdown" class="dropdown-content">
                 <ul class="navbar-nav navbar-collapse justify-content-end">
                     <li>
-                        <a *ngIf="isLoggedIn" class="nav-link" href="/logout" (click)=logout()>Logout</a>
+                        <a *ngIf="isLoggedIn" [routerLink]="['/login']" class="nav-link" (click)=logout()>Logout</a>
                     </li>
                 </ul>
             </div>

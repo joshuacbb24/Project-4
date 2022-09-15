@@ -1,5 +1,12 @@
 package com.skillstorm.project4.config;
 
+import java.io.IOException;
+import java.util.Arrays;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +24,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import com.skillstorm.project4.services.CustomUserDetailsService;
@@ -53,26 +63,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		auth.authenticationProvider(authenticationProvider());
 	}
 
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		final CorsConfiguration configuration = new CorsConfiguration();
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+		configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
+		configuration.setAllowCredentials(true);
+		configuration.setAllowedHeaders(Arrays.asList("*"));
+		configuration.setExposedHeaders(Arrays.asList("*", "x-auth-token", "Authorization",
+				"Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors();
-		http.httpBasic();
+
+		http.cors().configurationSource(corsConfigurationSource()).and().csrf()
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+				.ignoringAntMatchers("/account/register", "/logout").and().authorizeRequests()
+				.mvcMatchers("/auth/v1/login").permitAll().mvcMatchers("/account/register").permitAll().anyRequest()
+				.authenticated().and().logout().invalidateHttpSession(true).deleteCookies("JSESSIONID")
+				.logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))).and().httpBasic();
 		// this will generate me the CSRF cookie
 		// To access any endpoint, I now need a X-XSRF-TOKEN header containing the value
 		// of the cookie
-		/*http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-		.ignoringAntMatchers("/login/**");
-		*/
-		// http.authorizeRequests().mvcMatchers("/signup",
-		// "/login").anonymous().anyRequest().authenticated();
-		http.authorizeRequests().mvcMatchers(HttpMethod.GET, "/auth/v1/login").permitAll();
-		http.authorizeRequests().mvcMatchers(HttpMethod.POST, "/account/register").permitAll();
-		http.authorizeRequests().mvcMatchers(HttpMethod.POST, "/logout").permitAll();
-		http.authorizeRequests().anyRequest().authenticated();
-		http.csrf().disable();
-
-		http.logout().permitAll();
-		http.logout().deleteCookies("JSESSIONID").invalidateHttpSession(true).logoutSuccessHandler((new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK)));
+		/*
+		 * http.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()
+		 * ) .ignoringAntMatchers("/account/register");
+		 */
 	}
 
 }

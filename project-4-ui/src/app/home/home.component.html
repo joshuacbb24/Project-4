@@ -11,6 +11,7 @@
             [title]="goal.name"
             [targetGoal]="goal.targetGoal"
             [currentAmount]="goal.currentAmount"
+            [date]="goal.endDate"
           ></app-goal-listing>
         </div>
     </div>
@@ -25,6 +26,7 @@
             <div class="col">
                 <div class="img-container">
                    <!-- <p-fileUpload #fubauto mode="basic" name="demo[]" url="./upload.php" accept="image/*" [maxFileSize]="filesize" [auto]="false" chooseLabel="Browse"></p-fileUpload>-->
+                   <img class="card-img" src="../../assets/images/default-goal-icon.png" alt="">
                 </div>
             </div>
             <div class="col">
@@ -52,7 +54,7 @@
                     <tr>
                         <td>
                             <mat-form-field class="example-full-width" appearance="outline">
-                                <label>Amount</label>
+                                <label>Goal Amount</label>
                                 <input matInput type="number" min="0.01" step="0.01" formControlName="amount" name="amount" placeholder="$0.00"/>
                                 <mat-error *ngIf="creationForm.get('amount')?.hasError('required')"> Enter a valid amount
                                 </mat-error>
@@ -60,14 +62,25 @@
                         </td>
                         <td>
                             <mat-form-field class="example-full-width" appearance="outline">
-                                <label>Description</label>
-                                <textarea matInput style="resize: none" formControlName="description" name="description"></textarea>
-                                <mat-error *ngIf="creationForm.get('description')?.hasError('required')"> Enter a description
+                                <label>Current Amount</label>
+                                <input matInput type="number" min="0.01" step="0.01" formControlName="currentAmount" name="currentAmount" placeholder="$0.00"/>
+                                <mat-error *ngIf="creationForm.get('currentAmount')?.hasError('required')"> Enter a valid amount
                                 </mat-error>
-                              </mat-form-field>
+                            </mat-form-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+
                         </td>
                     </tr>
                 </table>
+                <mat-form-field class="example-full-width description" appearance="outline">
+                    <label>Description</label>
+                    <textarea matInput style="resize: none" formControlName="description" name="description"></textarea>
+                    <mat-error *ngIf="creationForm.get('description')?.hasError('required')"> Enter a description
+                    </mat-error>
+                  </mat-form-field>
             </div>
         </div>
 

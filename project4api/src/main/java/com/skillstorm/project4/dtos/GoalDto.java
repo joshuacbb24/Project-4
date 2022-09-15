@@ -7,16 +7,23 @@ public class GoalDto {
 	private String description;
 	private String endDate;
 	private BigDecimal targetGoal;
+	private BigDecimal currentAmount;
+	
 	public GoalDto() {
 		super();
 	}
-	public GoalDto(String name, String description, String endDate, BigDecimal targetGoal) {
+
+	
+	public GoalDto(String name, String description, String endDate, BigDecimal targetGoal, BigDecimal currentAmount) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.endDate = endDate;
 		this.targetGoal = targetGoal;
+		this.currentAmount = currentAmount;
 	}
+
+
 	public String getName() {
 		return name;
 	}
@@ -41,11 +48,25 @@ public class GoalDto {
 	public void setTargetGoal(BigDecimal targetGoal) {
 		this.targetGoal = targetGoal;
 	}
+	
+	public BigDecimal getCurrentAmount() {
+		return currentAmount;
+	}
+
+
+	public void setCurrentAmount(BigDecimal currentAmount) {
+		this.currentAmount = currentAmount;
+	}
+
+
 	@Override
 	public String toString() {
 		return "GoalDto [name=" + name + ", description=" + description + ", endDate=" + endDate + ", targetGoal="
-				+ targetGoal + "]";
+				+ targetGoal + ", currentAmount=" + currentAmount + "]";
 	}
+
+
+
 	
 	
 }

@@ -33,17 +33,18 @@ public class GoalService {
     public Goal createGoal(CustomUserDetails customUserDetails, GoalDto goal) {
     	Set<Account> accounts = new HashSet<Account>();
     	accounts.add(customUserDetails.getAccount());
-    	Goal newGoal = new Goal(goal.getName(), goal.getEndDate(), goal.getDescription(), accounts, goal.getTargetGoal());
-    	newGoal.setCurrentAmount(new BigDecimal(0.0));
+    	Goal newGoal = new Goal(goal.getName(), goal.getEndDate(), goal.getDescription(), accounts, goal.getTargetGoal(), goal.getCurrentAmount());
     	return goalRepository.save(newGoal);
     }
     
-    public Goal updateGoal(int id, Goal newGoal, CustomUserDetails customUserDetails) {
+    public Goal updateGoal(int id, GoalDto newGoal, CustomUserDetails customUserDetails) {
     		Goal savedGoal = goalRepository.findById(id).get();
     		if (savedGoal != null) {
     			savedGoal.setDescription(newGoal.getDescription());
     			savedGoal.setEndDate(newGoal.getEndDate());
-    			savedGoal.setName(newGoal.getName());   			
+    			savedGoal.setName(newGoal.getName());
+    			savedGoal.setCurrentAmount(newGoal.getCurrentAmount());
+    			savedGoal.setTargetGoal(newGoal.getTargetGoal());
     		}
     		return goalRepository.save(savedGoal);	
     }
